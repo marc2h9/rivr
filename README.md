@@ -1,2 +1,2 @@
 # rivr
-A discord moderation bot
+A discord moderation bot made in discord.py
