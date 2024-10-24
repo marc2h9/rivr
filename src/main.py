@@ -6,10 +6,10 @@ intents = discord.Intents.default()
 intents.message_content = True
 
 load_dotenv()
-client = discord.Client(intents=intents)
+class discord_client(discord.Client):
+    async def on_ready(self):
+        print(f"Logged in as {self.user.name} (ID: {self.user.id})")
 
-@client.event
-async def on_ready():
-    print(f"Logged in as {client.user.name} (ID: {client.user.id})")
+client = discord_client(intents=intents)
 
 client.run(os.getenv("TOKEN"))
