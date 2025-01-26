@@ -1,5 +1,6 @@
 using System.Reflection;
 using Discord;
+using Discord.WebSocket;
 
 namespace SlashCommandsBuilder
 {
@@ -7,7 +8,13 @@ namespace SlashCommandsBuilder
     {
         public required string Name { get; set; }
         public required string Description { get; set; }
-        public ApplicationCommandType Type { get; set; }
+        public string CommandType { get; set; }
+
+        public virtual async Task Execute(SocketSlashCommand command)
+        {
+            Console.WriteLine("Failed to override Execute");
+            await command.RespondAsync("ERROR: FAILED TO OVERRIDE EXECUTE!");
+        }
     }
 
     public class SlashCommandsList()

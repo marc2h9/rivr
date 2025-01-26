@@ -8,10 +8,10 @@ public class Ping : SlashCommand
     {
         Name = "ping";
         Description = "Ping!";
-        Type = ApplicationCommandType.Slash;
+        CommandType = "Slash";
     }
 
-    public async Task Execute(SocketSlashCommand command)
+    public override async Task Execute(SocketSlashCommand command)
     {
         await command.RespondAsync("Pong!");
     }

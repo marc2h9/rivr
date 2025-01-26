@@ -6,6 +6,11 @@ using Newtonsoft.Json;
 
 public class Program
 {
+    DiscordSocketConfig config = new()
+    {
+        UseInteractionSnowflakeDate = false
+    };
+
     private static DiscordSocketClient _client;
 
     public static async Task Main()
@@ -13,6 +18,7 @@ public class Program
         _client = new DiscordSocketClient();
         _client.Log += Log;
         _client.Ready += Client_Ready;
+        _client.SlashCommandExecuted += SlashCommandHandler;
         
         string tokenPath = Path.Combine(Directory.GetCurrentDirectory(), "token.txt");
         var DISCORD_TOKEN = File.ReadAllText(tokenPath);
@@ -28,11 +34,23 @@ public class Program
         return Task.CompletedTask;
     }
 
+    private static async Task SlashCommandHandler(SocketSlashCommand command)
+    {
+        SlashCommandsList slashCommands = new SlashCommandsBuilder.SlashCommandsList();
+        Console.WriteLine("Command: " + command.Data.Name);
+
+        foreach(var slashCommand in slashCommands.commands())
+        {
+            if(slashCommand.Name == command.Data.Name)
+            {
+                await slashCommand.Execute(command);
+            }
+        }
+    }
+
     public static async Task Client_Ready()
     {
         SlashCommandsList slashCommands = new SlashCommandsBuilder.SlashCommandsList();
-        var guild = _client.GetGuild(1278649285700747296);
-
         Console.WriteLine("Number of commands: " + slashCommands.commands().Count());
 
         try
@@ -40,11 +58,26 @@ public class Program
             foreach(var command in slashCommands.commands())
             {
                 var commandBuilder = new SlashCommandBuilder();
-                Console.WriteLine("Adding command: " + command.Name);
+                Console.WriteLine("Adding command: " + command.Name + " Type: " + command.CommandType);
 
-                commandBuilder.WithName(command.Name);
-                commandBuilder.WithDescription(command.Description);
-                await _client.CreateGlobalApplicationCommandAsync(commandBuilder.Build());
+                switch(command.CommandType)
+                {
+                    case "Slash":
+                        commandBuilder.WithName(command.Name);
+                        commandBuilder.WithDescription(command.Description);
+                        await _client.CreateGlobalApplicationCommandAsync(commandBuilder.Build());
+                        break;
+                    /*  case "User":
+                        TODO: Add user commands when framework allows it
+
+                        commandBuilder.WithName(command.Name);
+                        commandBuilder.WithDescription(command.Description);
+                        await 
+                        break;  */
+                    default:
+                        throw new Exception("Unknown command type: " + command.CommandType);
+                        break;
+                }
             }
         }
         catch(HttpException exception)

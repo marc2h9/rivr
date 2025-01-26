@@ -8,7 +8,7 @@ public class Pong : SlashCommand
     {
         Name = "pong";
         Description = "Pong!";
-        Type = ApplicationCommandType.Slash;
+        CommandType = "Slash";
     }
 
     public async Task Execute(SocketSlashCommand command)
