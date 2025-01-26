@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("rivr")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3aa6964e9f9525baa79a454e08babf6e0457e6d2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1aeb2401951adcbf6da84ccc252b3ce081b418dc")]
 [assembly: System.Reflection.AssemblyProductAttribute("rivr")]
 [assembly: System.Reflection.AssemblyTitleAttribute("rivr")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
