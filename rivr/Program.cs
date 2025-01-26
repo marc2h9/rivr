@@ -31,12 +31,17 @@ public class Program
     public static async Task Client_Ready()
     {
         SlashCommandsList slashCommands = new SlashCommandsBuilder.SlashCommandsList();
-        var commandBuilder = new SlashCommandBuilder();
+        var guild = _client.GetGuild(1278649285700747296);
+
+        Console.WriteLine("Number of commands: " + slashCommands.commands().Count());
 
         try
         {
             foreach(var command in slashCommands.commands())
             {
+                var commandBuilder = new SlashCommandBuilder();
+                Console.WriteLine("Adding command: " + command.Name);
+
                 commandBuilder.WithName(command.Name);
                 commandBuilder.WithDescription(command.Description);
                 await _client.CreateGlobalApplicationCommandAsync(commandBuilder.Build());
